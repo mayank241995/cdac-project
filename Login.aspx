@@ -9,7 +9,8 @@
         .auto-style1 {
             width: 100%;
             border: 1px solid #000000;
-        }
+            color:brown;
+                  }
         .auto-style2 {
             width: 85px;
         }
@@ -19,6 +20,21 @@
         .auto-style4 {
             width: 42px;
         }
+        .auto-style5 {
+            width: 112px;
+            height: 25px;
+        }
+        .auto-style6 {
+            width: 85px;
+            height: 25px;
+        }
+        .auto-style7 {
+            width: 42px;
+            height: 25px;
+        }
+        .auto-style8 {
+            height: 25px;
+        }
     </style>
 </head>
 <body>
@@ -26,7 +42,7 @@
     <form id="form1" runat="server">
         <div>
         </div>
-        <table cellpadding="2" class="auto-style1">
+        <table  cellpadding="2" class="auto-style1">
             <tr>
                 <td class="auto-style3">&nbsp;</td>
                 <td class="auto-style2">&nbsp;</td>
@@ -41,13 +57,14 @@
                 <td class="auto-style4">&nbsp;</td>
                 <td>
                     <asp:TextBox ID="txt_uid" runat="server"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txt_uid" ErrorMessage="UserId Cannot Be Blank"></asp:RequiredFieldValidator>
                 </td>
             </tr>
             <tr>
-                <td class="auto-style3">&nbsp;</td>
-                <td class="auto-style2">&nbsp;</td>
-                <td class="auto-style4">&nbsp;</td>
-                <td>&nbsp;</td>
+                <td class="auto-style5"></td>
+                <td class="auto-style6"></td>
+                <td class="auto-style7"></td>
+                <td class="auto-style8"></td>
             </tr>
             <tr>
                 <td class="auto-style3">&nbsp;</td>
@@ -56,14 +73,17 @@
                 </td>
                 <td class="auto-style4">&nbsp;</td>
                 <td>
-                    <asp:TextBox ID="txt_pwd" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txt_pwd" runat="server" TextMode="Password"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txt_pwd" ErrorMessage="Password Cannot Be Blank"></asp:RequiredFieldValidator>
                 </td>
             </tr>
             <tr>
                 <td class="auto-style3">&nbsp;</td>
                 <td class="auto-style2">&nbsp;</td>
                 <td class="auto-style4">&nbsp;</td>
-                <td>&nbsp;</td>
+                <td>
+                    <asp:Label ID="lblError" runat="server" ForeColor="Red"></asp:Label>
+                </td>
             </tr>
             <tr>
                 <td class="auto-style3">&nbsp;</td>
@@ -77,12 +97,16 @@
                 <td class="auto-style4">
                     <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Login" />
                 </td>
-                <td>&nbsp;</td>
+                <td>
+                    <asp:Button ID="btnForgotPassword" runat="server" OnClick="btnForgotPassword_Click" Text="Forgot Password" />
+                </td>
             </tr>
             <tr>
                 <td class="auto-style3">&nbsp;</td>
                 <td class="auto-style2">&nbsp;</td>
-                <td class="auto-style4">&nbsp;</td>
+                <td class="auto-style4">
+                    <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/Register.aspx">SignUp</asp:HyperLink>
+                </td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
