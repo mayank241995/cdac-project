@@ -21,7 +21,7 @@
         <table class="auto-style1">
             <tr>
                 <td class="auto-style2">
-                    <asp:Label ID="Label1" runat="server" Text="Enter Your Email Address :"></asp:Label>
+                    <asp:Label ID="Label1" runat="server" Text="Enter Registered Email Address :"></asp:Label>
                 </td>
                 <td>
                     <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
