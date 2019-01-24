@@ -9,14 +9,16 @@ using System.Web.UI.WebControls;
 
 public partial class Register : System.Web.UI.Page
 {
+    public static object DataAccessLayer { get; private set; }
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if(!IsPostBack)
         {
-
+            
         }
     }
-
+    
     protected void Button1_Click(object sender, EventArgs e)
     {
         SqlConnection cn = new SqlConnection();
@@ -33,7 +35,7 @@ public partial class Register : System.Web.UI.Page
         cmdInsert.Parameters.AddWithValue("@Mobileno", txt_mobno.Text);
         cmdInsert.Parameters.AddWithValue("@Password", txt_pwd.Text);
         cmdInsert.Parameters.AddWithValue("@Address", txt_address.Text);
-        cmdInsert.Parameters.AddWithValue("@Area", txt_area.Text);
+        cmdInsert.Parameters.AddWithValue("@Area", AreaList.SelectedValue);
 
 
         cn.Open();
@@ -44,5 +46,15 @@ public partial class Register : System.Web.UI.Page
     protected void txt_name_TextChanged(object sender, EventArgs e)
     {
 
+    }
+
+    protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
+    }
+
+    protected void txt_u_name_TextChanged(object sender, EventArgs e)
+    {
+       
     }
 }

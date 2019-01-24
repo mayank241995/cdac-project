@@ -99,7 +99,8 @@
                     UserId</td>
                 <td class="auto-style6">&nbsp;</td>
                 <td class="auto-style5">
-                    <asp:TextBox ID="txt_u_name" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txt_u_name" runat="server" OnTextChanged="txt_u_name_TextChanged"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Field Cannot Be Empty" ControlToValidate="txt_u_name"></asp:RequiredFieldValidator>
                 </td>
             </tr>
             <tr>
@@ -109,13 +110,14 @@
                 <td class="auto-style10"></td>
             </tr>
             <tr>
-                <td class="auto-style7">&nbsp;</td>
+                <td class="auto-style7"></td>
                 <td class="auto-style8">
                     <asp:Label ID="Label2" runat="server" Text="Name"></asp:Label>
                 </td>
-                <td class="auto-style9">&nbsp;</td>
+                <td class="auto-style9"></td>
                 <td class="auto-style10">
                     <asp:TextBox ID="txt_name" runat="server" OnTextChanged="txt_name_TextChanged"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Field Cannot Be Empty" ControlToValidate="txt_name"></asp:RequiredFieldValidator>
                 </td>
             </tr>
             <tr>
@@ -132,6 +134,7 @@
                 <td class="auto-style6">&nbsp;</td>
                 <td class="auto-style5">
                     <asp:TextBox ID="txt_email" runat="server"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="Field Cannot Be Empty" ControlToValidate="txt_email"></asp:RequiredFieldValidator>
                 </td>
             </tr>
             <tr>
@@ -148,6 +151,7 @@
                 <td class="auto-style6">&nbsp;</td>
                 <td class="auto-style5">
                     <asp:TextBox ID="txt_mobno" runat="server"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="Field Cannot Be Empty" ControlToValidate="txt_mobno"></asp:RequiredFieldValidator>
                 </td>
             </tr>
             <tr>
@@ -164,6 +168,7 @@
                 <td class="auto-style6">&nbsp;</td>
                 <td class="auto-style5">
                     <asp:TextBox ID="txt_pwd" runat="server"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ErrorMessage="Field Cannot Be Empty" ControlToValidate="txt_pwd"></asp:RequiredFieldValidator>
                 </td>
             </tr>
             <tr>
@@ -180,6 +185,7 @@
                 <td class="auto-style13"></td>
                 <td id="txt_c_pwd" class="auto-style14">
                     <asp:TextBox ID="txt_c_pwd" runat="server"></asp:TextBox>
+                    <asp:CompareValidator ID="CompareValidator1" runat="server" ControlToCompare="txt_pwd" ErrorMessage="Password and Compare Password should be same" ControlToValidate="txt_c_pwd"></asp:CompareValidator>
                 </td>
             </tr>
             <tr>
@@ -196,6 +202,7 @@
                 <td class="auto-style17">&nbsp;</td>
                 <td class="auto-style18">
                     <asp:TextBox ID="txt_address" runat="server" TextMode="MultiLine"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ErrorMessage="Field Cannot Be Empty" ControlToValidate="txt_address"></asp:RequiredFieldValidator>
                 </td>
             </tr>
             <tr>
@@ -211,7 +218,17 @@
                 </td>
                 <td class="auto-style17">&nbsp;</td>
                 <td class="auto-style18">
-                    <asp:TextBox ID="txt_area" runat="server"></asp:TextBox>
+                    <asp:DropDownList ID="AreaList" runat="server" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
+                    <asp:ListItem>Western Suburbs</asp:ListItem>
+                    <asp:ListItem>Central Suburbs</asp:ListItem>
+                     <asp:ListItem>South Mumbai</asp:ListItem>
+                     <asp:ListItem>Thane</asp:ListItem>
+                      <asp:ListItem>Navi Mumbai</asp:ListItem>
+
+
+                    </asp:DropDownList>
+&nbsp;&nbsp;
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ErrorMessage="Field Cannot Be Empty" ControlToValidate="AreaList"></asp:RequiredFieldValidator>
                 </td>
             </tr>
             <tr>
