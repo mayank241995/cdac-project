@@ -62,13 +62,10 @@
             </tr>
             <tr>
                 <td class="auto-style2">
-                    <asp:Label ID="Label3" runat="server" Text="Image"></asp:Label>
-                </td>
+                    &nbsp;</td>
                 <td>
-                    <asp:FileUpload ID="fileupload" runat="server" />
                     <br />
                     <br />
-                    <asp:Label ID="Label8" runat="server" Text="Label"></asp:Label>
                 </td>
             </tr>
             <tr>

@@ -19,16 +19,16 @@ public partial class List : System.Web.UI.Page
     protected void btnUploadFile_Click(object sender, EventArgs e)
     {
         SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["con"].ConnectionString);
-        
 
-        
+
+        cn.Open();
 
         SqlCommand cmdInsert = new SqlCommand();
         cmdInsert.Connection = cn;
         cmdInsert.CommandType = CommandType.Text;
-        cmdInsert.CommandText = "insert into books values(@book, @user,@title , @author, @category, @ori , @sell)";
+        cmdInsert.CommandText = "insert into Books(User_id, Title, Author, Category, Original_price, Selling_price) values(@user,@title , @author, @category, @ori , @sell)";
         
-        cmdInsert.Parameters.AddWithValue("@book", 2);
+        //cmdInsert.Parameters.AddWithValue("@book", 2);
         cmdInsert.Parameters.AddWithValue("@user", 1);
         cmdInsert.Parameters.AddWithValue("@title", TextBox1.Text);
         //cmdInsert.Parameters.AddWithValue("@pw", TextBox2.Text);
