@@ -19,7 +19,9 @@ public partial class Search : System.Web.UI.Page
     {
        
         GetRecord(string.IsNullOrEmpty(DropDownList1.SelectedValue) ? null : DropDownList1.SelectedValue,
-            string.IsNullOrEmpty(DropDownList2.SelectedValue) ? null : DropDownList2.SelectedValue);
+            string.IsNullOrEmpty(DropDownList2.SelectedValue) ? null : DropDownList2.SelectedValue,
+            string.IsNullOrEmpty(TextBox1.Text) ? null : TextBox1.Text,
+            string.IsNullOrEmpty(TextBox2.Text) ? null : TextBox2.Text);
         //if (DropDownList1.Text != "Choose Area")
         //{
         //    if (DropDownList2.Text != "Choose Category")
@@ -79,5 +81,10 @@ public partial class Search : System.Web.UI.Page
         cn1.Close();
     }
 
-    
+
+
+    protected void DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
+    }
 }
