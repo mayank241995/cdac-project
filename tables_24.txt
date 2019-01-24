@@ -1,0 +1,61 @@
+CREATE TABLE [dbo].[Authors] (
+    [Author_id] INT          IDENTITY (1, 1) NOT NULL,
+    [Name]      VARCHAR (50) NOT NULL,
+    PRIMARY KEY CLUSTERED ([Author_id] ASC)
+);
+
+CREATE TABLE [dbo].[Books] (
+    [Book_id]        INT          NOT NULL,
+    [User_id]        VARCHAR (50) NOT NULL,
+    [Title]          VARCHAR (50) NOT NULL,
+    [Category]       VARCHAR (50) NOT NULL,
+    [No_of_pages]    INT          NULL,
+    [Publication]    VARCHAR (50) NOT NULL,
+    [Original_price] INT          NULL,
+    [Selling_price]  INT          NOT NULL,
+    [Exchange]       BIT          NULL,
+    [Status_book]    BIT          NOT NULL,
+    [Pic]            IMAGE        NOT NULL,
+    [Author]         VARCHAR (50) NULL,
+    PRIMARY KEY CLUSTERED ([Book_id] ASC),
+    CONSTRAINT [FK_Books_UserInfo] FOREIGN KEY ([User_id]) REFERENCES [dbo].[UserInfo] ([User_id])
+);
+
+CREATE TABLE [dbo].[UserInfo] (
+    [User_id]  VARCHAR (50) NOT NULL,
+    [Name]     VARCHAR (50) NOT NULL,
+    [Email]    VARCHAR (50) NOT NULL,
+    [Mobileno] NUMERIC (10) NOT NULL,
+    [Password] VARCHAR (50) NOT NULL,
+    [Address]  TEXT         NOT NULL,
+    [Area]     VARCHAR (50) NOT NULL,
+    PRIMARY KEY CLUSTERED ([User_id] ASC)
+);
+
+
+CREATE TABLE [dbo].[Feedback] (
+    [Fb_id]   INT  NOT NULL,
+    [Book_id] INT  NOT NULL,
+    [Comment] TEXT NOT NULL,
+    PRIMARY KEY CLUSTERED ([Fb_id] ASC)
+);
+
+
+CREATE TABLE [dbo].[BookAuth] (
+    [Author_id] INT NOT NULL,
+    [Book_id]   INT NOT NULL,
+    CONSTRAINT [FK_BookAuth_Authors] FOREIGN KEY ([Author_id]) REFERENCES [dbo].[Authors] ([Author_id])
+);
+
+
+GO
+CREATE TRIGGER afterInsertBook on [dbo].BookAuth
+FOR INSERT
+AS
+	declare @Author_id int;
+	declare @Book_id int;
+
+	select @Author_id = Authors.Author_id from inserted Authors;
+	select @Book_id = Books.Book_id from inserted Books;
+
+	insert into BookAuth values(@Author_id,@Book_id)
