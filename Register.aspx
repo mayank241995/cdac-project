@@ -5,248 +5,153 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+      <link rel="stylesheet" type="text/css" href="Styles/RegisterPageStyleSheet.css"/>
+   <link rel="stylesheet" type="text/css" href="Styles/animate.css"/>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css"/>
+
     <style type="text/css">
-        .auto-style1 {
-            width: 100%;
-            border: 2px solid #000000;
-        }
-        .auto-style2 {
-            margin-left: 280px;
-        }
+        hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 10px;
+}
+.registerbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
         .auto-style3 {
-            width: 129px;
-        }
-        .auto-style4 {
-            width: 60px;
-        }
-        .auto-style5 {
-            width: 394px;
+           width: 550px;
+    padding: 16px;
+    border: 2px solid black;
+    border-radius: 15px;
+    background-color: azure;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+    margin-top: auto;
         }
         .auto-style6 {
-            width: 63px;
+            margin-top: 0px;
+            margin-bottom: 0px;
         }
         .auto-style7 {
-            width: 60px;
-            height: 25px;
+            margin-left: 0px;
         }
-        .auto-style8 {
-            width: 129px;
-            height: 25px;
-        }
-        .auto-style9 {
-            width: 63px;
-            height: 25px;
-        }
-        .auto-style10 {
-            width: 394px;
-            height: 25px;
-        }
-        .auto-style11 {
-            width: 60px;
-            height: 45px;
-        }
-        .auto-style12 {
-            width: 129px;
-            height: 45px;
-        }
-        .auto-style13 {
-            width: 63px;
-            height: 45px;
-        }
-        .auto-style14 {
-            width: 394px;
-            height: 45px;
-        }
-        .auto-style15 {
-            width: 60px;
-            height: 34px;
-        }
-        .auto-style16 {
-            width: 129px;
-            height: 34px;
-        }
-        .auto-style17 {
-            width: 63px;
-            height: 34px;
-        }
-        .auto-style18 {
-            width: 394px;
-            height: 34px;
-        }
-    </style>
+        </style>
+    
+   
+
 </head>
 <body>
-    <form id="form1" runat="server">
-        <div class="auto-style2">
-            <asp:Label ID="Label1" runat="server" Text="REGISTRATION PAGE"></asp:Label>
+    <form  id="form1" runat="server">
+      <!--  <div class="regmainpage wow fadeInDown">-->
+        <div class="auto-style3 wow fadeInDown" style="border-radius: 15px;">
+            <h1 class="wow bounceIn delay-1s">Register</h1>
+            <asp:Label ID="Label11" runat="server" Font-Bold="True" ForeColor="Red"></asp:Label>
+
+            <br />
+
+            <asp:Label class="wow bounceIn delay-2s" ID="Label8" runat="server"><b>User ID</b></asp:Label>
+            <br />
+            &nbsp;
+            <asp:TextBox  cssclass="wow bounceIn delay-1s" ID="txt_u_name" runat="server"  Height="40px" Width="486px" onchange="checkIDAvailability()" onblur ="checkIDAvailability()"></asp:TextBox>
+
+
+
+            <asp:Label ID="check_id" runat="server"></asp:Label>
+
+
+
+            <br />
+            <asp:Label cssclass="wow bounceIn delay-3s" ID="Label2" runat="server"><b>Name</b></asp:Label>
+            <br />
+            <br />
+
+
+            <asp:TextBox cssclass="wow fadeInUp delay-3s" ID="txt_name" runat="server" Height="40px" Width="486px"></asp:TextBox>
+            &nbsp;<br />
+            <asp:Label class="wow bounceIn delay-3s" ID="Label3" runat="server"><b>Email</b></asp:Label>
+            <br />
+            <br />
+            &nbsp;<asp:TextBox cssclass="wow fadeInUp delay-3s" ID="txt_email" runat="server"  Height="40px" Width="486px"></asp:TextBox>
+            <br />
+            <asp:Label class="wow bounceIn delay-3s" ID="Label4" runat="server"><b>Mobile No.</b></asp:Label>
+            <br />
+            <br />
+            &nbsp;<asp:TextBox cssclass="wow fadeInUp delay-3s" ID="txt_mobno" runat="server" Height="40px" Width="486px"></asp:TextBox>
+            <br />
+
+            <asp:Label class="wow fadeIn delay-3s" ID="Label6" runat="server"><b>Password</b></asp:Label>
+            <br />
+            <br />
+            &nbsp;<asp:TextBox cssclass="wow fadeInUp delay-3s" ID="txt_pwd" runat="server" Height="40px" Width="486px"></asp:TextBox>
+            <br />
+            <asp:Label class="wow bounceIn delay-3s" ID="Label7" runat="server"><b>Confirm Password</b></asp:Label>
+            <br />
+            <br />
+            <asp:TextBox cssclass="wow fadeInUp delay-3s" ID="txt_c_pwd" runat="server" Height="40px" Width="486px"></asp:TextBox>
+            <br />
+            &nbsp;<asp:Label class="wow bounceIn delay-3s" ID="Label9" runat="server" Text="&lt;b&gt;Adress&lt;/b&gt;"></asp:Label>
+            <br />
+            <asp:TextBox cssclass="wow fadeInUp delay-3s" ID="txt_address" runat="server" TextMode="MultiLine" Height="47px" Width="197px"></asp:TextBox>
+            <br />
+            <asp:Label class="wow bounceIn delay-3s" ID="Label10" runat="server" Text="&lt;b&gt;Area&lt;/b&gt;"></asp:Label>
+            <br />
+            <br />
+            <br />
+            <asp:DropDownList ID="DropDownList1" runat="server" Height="28px" Width="515px">
+                 <asp:ListItem Selected="True"></asp:ListItem>
+            <asp:ListItem>Western Suburbs</asp:ListItem>
+            <asp:ListItem>Central Suburbs</asp:ListItem>
+            <asp:ListItem>South Mumbai</asp:ListItem>
+            <asp:ListItem>Thane</asp:ListItem>
+            <asp:ListItem>Navi Mumbai</asp:ListItem>
+            </asp:DropDownList>
+            <br />
+            <br />
+            <br />
+            <asp:Button cssclass="wow bounceIn delay-3s" ID="registerbtn" runat="server" OnClick="Button1_Click" Text="SignUp" BackColor="#009933" Font-Bold="True" Height="60px" Width="526px" />
+
+            <hr />
+            <div class="container signin">
+                <p>
+                    Already have an account?
+                    <asp:Button ID="Button2" runat="server" Height="20px" OnClick="Button2_Click" Text="Login" BackColor="#009933" />
+                </p>
+            </div>
         </div>
-        <table cellpadding="2" class="auto-style1">
-            <tr>
-                <td class="auto-style4">&nbsp;</td>
-                <td class="auto-style3">&nbsp;</td>
-                <td class="auto-style6">&nbsp;</td>
-                <td class="auto-style5">&nbsp;</td>
-            </tr>
-            <tr>
-                <td class="auto-style4">&nbsp;</td>
-                <td class="auto-style3">&nbsp;</td>
-                <td class="auto-style6">&nbsp;</td>
-                <td class="auto-style5">&nbsp;</td>
-            </tr>
-            <tr>
-                <td class="auto-style4">&nbsp;</td>
-                <td class="auto-style3">
-                    UserId</td>
-                <td class="auto-style6">&nbsp;</td>
-                <td class="auto-style5">
-                    <asp:TextBox ID="txt_u_name" runat="server" OnTextChanged="txt_u_name_TextChanged"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Field Cannot Be Empty" ControlToValidate="txt_u_name"></asp:RequiredFieldValidator>
-                </td>
-            </tr>
-            <tr>
-                <td class="auto-style7"></td>
-                <td class="auto-style8">&nbsp;</td>
-                <td class="auto-style9"></td>
-                <td class="auto-style10"></td>
-            </tr>
-            <tr>
-                <td class="auto-style7"></td>
-                <td class="auto-style8">
-                    <asp:Label ID="Label2" runat="server" Text="Name"></asp:Label>
-                </td>
-                <td class="auto-style9"></td>
-                <td class="auto-style10">
-                    <asp:TextBox ID="txt_name" runat="server" OnTextChanged="txt_name_TextChanged"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Field Cannot Be Empty" ControlToValidate="txt_name"></asp:RequiredFieldValidator>
-                </td>
-            </tr>
-            <tr>
-                <td class="auto-style7"></td>
-                <td class="auto-style8"></td>
-                <td class="auto-style9"></td>
-                <td class="auto-style10"></td>
-            </tr>
-            <tr>
-                <td class="auto-style4">&nbsp;</td>
-                <td class="auto-style3">
-                    <asp:Label ID="Label3" runat="server" Text="Email"></asp:Label>
-                </td>
-                <td class="auto-style6">&nbsp;</td>
-                <td class="auto-style5">
-                    <asp:TextBox ID="txt_email" runat="server"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="Field Cannot Be Empty" ControlToValidate="txt_email"></asp:RequiredFieldValidator>
-                </td>
-            </tr>
-            <tr>
-                <td class="auto-style7"></td>
-                <td class="auto-style8"></td>
-                <td class="auto-style9"></td>
-                <td class="auto-style10"></td>
-            </tr>
-            <tr>
-                <td class="auto-style4">&nbsp;</td>
-                <td class="auto-style3">
-                    <asp:Label ID="Label6" runat="server" Text="Mobile Number"></asp:Label>
-                </td>
-                <td class="auto-style6">&nbsp;</td>
-                <td class="auto-style5">
-                    <asp:TextBox ID="txt_mobno" runat="server"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="Field Cannot Be Empty" ControlToValidate="txt_mobno"></asp:RequiredFieldValidator>
-                </td>
-            </tr>
-            <tr>
-                <td class="auto-style4">&nbsp;</td>
-                <td class="auto-style3">&nbsp;</td>
-                <td class="auto-style6">&nbsp;</td>
-                <td class="auto-style5">&nbsp;</td>
-            </tr>
-            <tr>
-                <td class="auto-style4">&nbsp;</td>
-                <td class="auto-style3">
-                    <asp:Label ID="Label4" runat="server" Text="Password"></asp:Label>
-                </td>
-                <td class="auto-style6">&nbsp;</td>
-                <td class="auto-style5">
-                    <asp:TextBox ID="txt_pwd" runat="server"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ErrorMessage="Field Cannot Be Empty" ControlToValidate="txt_pwd"></asp:RequiredFieldValidator>
-                </td>
-            </tr>
-            <tr>
-                <td class="auto-style4">&nbsp;</td>
-                <td class="auto-style3">&nbsp;</td>
-                <td class="auto-style6">&nbsp;</td>
-                <td class="auto-style5">&nbsp;</td>
-            </tr>
-            <tr>
-                <td class="auto-style11"></td>
-                <td class="auto-style12">
-                    <asp:Label ID="Label5" runat="server" Text="Confirm Password"></asp:Label>
-                </td>
-                <td class="auto-style13"></td>
-                <td id="txt_c_pwd" class="auto-style14">
-                    <asp:TextBox ID="txt_c_pwd" runat="server"></asp:TextBox>
-                    <asp:CompareValidator ID="CompareValidator1" runat="server" ControlToCompare="txt_pwd" ErrorMessage="Password and Compare Password should be same" ControlToValidate="txt_c_pwd"></asp:CompareValidator>
-                </td>
-            </tr>
-            <tr>
-                <td class="auto-style15"></td>
-                <td class="auto-style16">&nbsp;</td>
-                <td class="auto-style17"></td>
-                <td class="auto-style18"></td>
-            </tr>
-            <tr>
-                <td class="auto-style15">&nbsp;</td>
-                <td class="auto-style16">
-                    <asp:Label ID="Label7" runat="server" Text="Address"></asp:Label>
-                </td>
-                <td class="auto-style17">&nbsp;</td>
-                <td class="auto-style18">
-                    <asp:TextBox ID="txt_address" runat="server" TextMode="MultiLine"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ErrorMessage="Field Cannot Be Empty" ControlToValidate="txt_address"></asp:RequiredFieldValidator>
-                </td>
-            </tr>
-            <tr>
-                <td class="auto-style15">&nbsp;</td>
-                <td class="auto-style16">&nbsp;</td>
-                <td class="auto-style17">&nbsp;</td>
-                <td class="auto-style18">&nbsp;</td>
-            </tr>
-            <tr>
-                <td class="auto-style15">&nbsp;</td>
-                <td class="auto-style16">
-                    <asp:Label ID="Label8" runat="server" Text="Area"></asp:Label>
-                </td>
-                <td class="auto-style17">&nbsp;</td>
-                <td class="auto-style18">
-                    <asp:DropDownList ID="AreaList" runat="server" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
-                    <asp:ListItem>Western Suburbs</asp:ListItem>
-                    <asp:ListItem>Central Suburbs</asp:ListItem>
-                     <asp:ListItem>South Mumbai</asp:ListItem>
-                     <asp:ListItem>Thane</asp:ListItem>
-                      <asp:ListItem>Navi Mumbai</asp:ListItem>
-
-
-                    </asp:DropDownList>
-&nbsp;&nbsp;
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ErrorMessage="Field Cannot Be Empty" ControlToValidate="AreaList"></asp:RequiredFieldValidator>
-                </td>
-            </tr>
-            <tr>
-                <td class="auto-style15">&nbsp;</td>
-                <td class="auto-style16">&nbsp;</td>
-                <td class="auto-style17">&nbsp;</td>
-                <td class="auto-style18">&nbsp;</td>
-            </tr>
-            <tr>
-                <td class="auto-style15">&nbsp;</td>
-                <td class="auto-style16">&nbsp;</td>
-                <td class="auto-style17">
-                    <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="SignUp" />
-                </td>
-                <td class="auto-style18">
-                    <input id="Reset1" type="reset" value="Reset" /></td>
-            </tr>
-        </table>
+                       
     </form>
-</body>
+    
+     <script src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.2.js"></script>
+    <script type="text/javascript">
+         function checkIDAvailability() {
+            $.ajax({
+                type: "POST",
+                url: "Register.aspx/checkUserName",
+                data: "{IDVal: '" + $("#<% =txt_u_name.ClientID %>").val() + "' }",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: onSuccess,
+                failure: function (AjaxResponse) {
+                    document.getElementById("check_id").innerHTML = "Dfgdfg";
+                }
+            });
+            function onSuccess(AjaxResponse) {
+                document.getElementById("check_id").innerHTML = AjaxResponse.d;
+            }
+        }
+         </script>
+    
+
+     <script src="js/wow.min.js"></script>
+              <script>
+              new WOW().init();
+              </script>
+      </body>
 </html>
