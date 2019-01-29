@@ -1,0 +1,75 @@
+CREATE TABLE [dbo].[Authors] (
+    [Author_id] INT          IDENTITY (1, 1) NOT NULL,
+    [Name]      VARCHAR (50) NOT NULL,
+    PRIMARY KEY CLUSTERED ([Author_id] ASC),
+    UNIQUE NONCLUSTERED ([Name] ASC)
+);
+
+CREATE TABLE [dbo].[Books] (
+    [Book_id]        INT          IDENTITY (1, 1) NOT NULL,
+    [User_id]        VARCHAR (50) NOT NULL,
+    [Title]          VARCHAR (50) NOT NULL,
+    [Category]       VARCHAR (50) NOT NULL,
+    [No_of_pages]    INT          NULL,
+    [Publication]    VARCHAR (50) NOT NULL,
+    [Original_price] INT          NULL,
+    [Selling_price]  INT          NOT NULL,
+    [Exchange]       BIT          NULL,
+    [Status_book]    BIT          NOT NULL,
+    [Pic]            IMAGE        NOT NULL,
+    PRIMARY KEY CLUSTERED ([Book_id] ASC),
+    CONSTRAINT [UC_Title_Userid] UNIQUE NONCLUSTERED ([User_id] ASC, [Title] ASC),
+    CONSTRAINT [FK_Books_UserInfo] FOREIGN KEY ([User_id]) REFERENCES [dbo].[UserInfo] ([User_id])
+);
+
+
+CREATE TABLE [dbo].[BookAuth] (
+    [Author_id] INT NOT NULL,
+    [Book_id]   INT NOT NULL,
+    CONSTRAINT [FK_BookAuth_Authors] FOREIGN KEY ([Author_id]) REFERENCES [dbo].[Authors] ([Author_id]),
+    CONSTRAINT [FK_BookAuth_Books] FOREIGN KEY ([Book_id]) REFERENCES [dbo].[Books] ([Book_id])
+);
+
+CREATE TABLE [dbo].[Feedback] (
+    [Fb_id]   INT          IDENTITY (1, 1) NOT NULL,
+    [Book_id] INT          NOT NULL,
+    [User_id] VARCHAR (50) NOT NULL,
+    [Comment] TEXT         NOT NULL,
+    PRIMARY KEY CLUSTERED ([Fb_id] ASC),
+    CONSTRAINT [FK_Feedback_Books] FOREIGN KEY ([Book_id]) REFERENCES [dbo].[Books] ([Book_id]),
+    CONSTRAINT [FK_Feedback_UserInfo] FOREIGN KEY ([User_id]) REFERENCES [dbo].[UserInfo] ([User_id])
+);
+
+
+CREATE TABLE [dbo].[UserInfo] (
+    [User_id]  VARCHAR (50) NOT NULL,
+    [Name]     VARCHAR (50) NOT NULL,
+    [Email]    VARCHAR (50) NOT NULL,
+    [Mobileno] NUMERIC (10) NOT NULL,
+    [Password] VARCHAR (50) NOT NULL,
+    [Address]  TEXT         NOT NULL,
+    [Area]     VARCHAR (50) NOT NULL,
+    PRIMARY KEY CLUSTERED ([User_id] ASC)
+);
+
+
+CREATE PROCEDURE [dbo].LoginSelect
+	@User_id varchar(50),
+	@Password varchar(10)
+as
+BEGIN
+	select count(*) from UserInfo where User_id = @User_id and Password = @Password
+ END
+
+
+CREATE PROCEDURE [dbo].RegisterUser
+	@User_id varchar(30),
+	@Name varchar(50),
+	@Email varchar(50),
+	@Mobileno numeric,
+	@Password varchar(20),
+	@Address varchar(50),
+	@Area varchar(20)
+AS
+	insert into UserInfo values(@User_id,@Name,@Email,@Mobileno,@Password,@Address,@Area)
+RETURN 0
