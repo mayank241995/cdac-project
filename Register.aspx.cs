@@ -11,7 +11,6 @@ public partial class Register : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
         txt_u_name.Attributes.Add("onblur", "checkIDAvailability()");
         //txt.Attributes["onBlur"] = "IsAccNumberValid(" & txtAccountNumber.ClientID & ")";
         txt_u_name.Attributes["onblur"] = checkUserName(txt_u_name.ClientID);
@@ -23,9 +22,6 @@ public partial class Register : System.Web.UI.Page
 
     protected void Button1_Click(object sender, EventArgs e)
     {
-
-
-
         SqlConnection cn = new SqlConnection();
         cn.ConnectionString = @"Data Source=(LocalDb)\MSSqlLocalDb;Initial Catalog=Suraj;Integrated Security=True;Pooling=False";
 
@@ -44,8 +40,10 @@ public partial class Register : System.Web.UI.Page
 
 
         cn.Open();
-        int res = cmdInsert.ExecuteNonQuery();
+        int res =cmdInsert.ExecuteNonQuery();
         cn.Close();
+
+        Response.Write("<script>alert('Registered Successfully!')</script>");
 
         if (res == 1)
         {
@@ -56,10 +54,10 @@ public partial class Register : System.Web.UI.Page
             Label11.Text = "Enter valid Info";
         }
     }
-    protected void Button2_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("Login.aspx");
-    }
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Login.aspx");
+        }
 
     [System.Web.Services.WebMethod(EnableSession = true)]
     public static string checkUserName(string IDVal)
@@ -92,4 +90,7 @@ public partial class Register : System.Web.UI.Page
     }
 }
 
- 
+
+
+
+    

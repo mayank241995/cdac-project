@@ -15,7 +15,17 @@ public partial class List : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            lbl_userid.Text =Session["user_id"].ToString();
+            try
+            {
+                if (Session["user_id"] == null)
+                    Response.Redirect("Login.aspx");
+                lbl_userid.Text = Session["user_id"].ToString();
+            }
+            catch (NullReferenceException e1)
+            {
+                Response.Write("<script>alert('Please Login!')</script>");
+            }
+            
 
             SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["con"].ConnectionString);
 
@@ -28,10 +38,10 @@ public partial class List : System.Web.UI.Page
             SqlDataReader dr = cmd.ExecuteReader();
             AuthorList.DataSource = dr;
             AuthorList.DataTextField = "Name";
-            AuthorList.DataValueField = "Author_id";
+            AuthorList.DataValueField = "Name";
             AuthorList.DataBind();
 
-            
+
             cn.Close();
         }
     }
@@ -50,45 +60,126 @@ public partial class List : System.Web.UI.Page
         SqlCommand cmdInsert = new SqlCommand();
         cmdInsert.Connection = cn;
         cmdInsert.CommandType = CommandType.Text;
-        cmdInsert.CommandText = "insert into books values(@User_id,@Title, @Category,@No_of_pages,@Publication,@Original_price,@Selling_price,@Exchange,@Status_book,@Pic)";
+        try
+        {
+            cmdInsert.CommandText = "insert into Books(User_id, Title, Category, No_of_pages, Publication, Original_price, Selling_price, Exchange, Status_book, Pic) values(@User_id,@Title, @Category,@No_of_pages,@Publication,@Original_price,@Selling_price,@Exchange,@Status_book,@Pic)";
 
-        //cmdInsert.CommandType = CommandType.StoredProcedure;
-        //cmdInsert.CommandText = "BookInsert";
+            //cmdInsert.CommandType = CommandType.StoredProcedure;
+            //cmdInsert.CommandText = "BookInsert";
 
-        cmdInsert.Parameters.AddWithValue("@User_id", lbl_userid.Text);
-        cmdInsert.Parameters.AddWithValue("@Title", txt_title.Text);
+            cmdInsert.Parameters.AddWithValue("@User_id", lbl_userid.Text);
+            cmdInsert.Parameters.AddWithValue("@Title", txt_title.Text);
 
-        cmdInsert.Parameters.AddWithValue("@Category", txt_category.Text);
-        cmdInsert.Parameters.AddWithValue("@No_of_pages", txt_no_of_pages.Text);
-        cmdInsert.Parameters.AddWithValue("@Publication", txt_publication.Text);
+            cmdInsert.Parameters.AddWithValue("@Category", DropDownList1.SelectedValue);
 
-        cmdInsert.Parameters.AddWithValue("@Original_price", txt_oprice.Text);
-        cmdInsert.Parameters.AddWithValue("@Selling_price", txt_sprice.Text);
+            cmdInsert.Parameters.AddWithValue("@No_of_pages", txt_no_of_pages.Text);
+            cmdInsert.Parameters.AddWithValue("@Publication", txt_publication.Text);
 
-        cmdInsert.Parameters.AddWithValue("@Exchange", rb_exchange.SelectedValue);
-        cmdInsert.Parameters.AddWithValue("@Status_book", rbstatus.SelectedValue);
-      
-        cmdInsert.Parameters.AddWithValue("@Pic", bytes);
+            cmdInsert.Parameters.AddWithValue("@Original_price", txt_oprice.Text);
+            cmdInsert.Parameters.AddWithValue("@Selling_price", txt_sprice.Text);
+
+            cmdInsert.Parameters.AddWithValue("@Exchange", rb_exchange.SelectedValue);
+            cmdInsert.Parameters.AddWithValue("@Status_book", rbstatus.SelectedValue);
+
+            cmdInsert.Parameters.AddWithValue("@Pic", bytes);
+            //cmdInsert.Parameters.AddWithValue("@author", TextBox1.Text);
 
 
-        cn.Open();
-        cmdInsert.ExecuteNonQuery();
+            cn.Open();
+            cmdInsert.ExecuteNonQuery();
+        }
+        catch(SqlException ex)
+        {
+            if (ex.Number == 2627)
+            {
+                Response.Write("<script>alert('The book already exists! Please enter a new book.')</script>");
+            }
+        }
 
+        string[] authors = txt_auth.Text.Split(',');
+        List<string> auth_list = authors.ToList<string>();
+        foreach (string author in authors)
+        {
+            try
+            {
+                cmdInsert = cn.CreateCommand();
+                cmdInsert.CommandText = "insert into Authors(Name) values (@Name)";
+                cmdInsert.Parameters.AddWithValue("@Name", author);
+                cmdInsert.ExecuteNonQuery();
+            }
+            catch (SqlException ex)
+            {
+                if (ex.Number == 2627)
+                {
+                    auth_list.Remove(author);
+                    //Response.Write("The author already exists!");
+                    //throw new System.ArgumentException("The author already exists!");
+                    Response.Write("<script>alert('The author already exists!')</script>");
+                }
+            }
+        }
+        
+        
 
         SqlCommand cmd_book_auth = new SqlCommand();
         cmd_book_auth.Connection = cn;
         cmd_book_auth.CommandType = CommandType.Text;
-        cmd_book_auth.CommandText = "insert into BookAuth values(@Author_id,@Book_id)";
+        cmd_book_auth.CommandText = "select Book_id from Books where User_id = @User_id and Title = @Title";
+        cmd_book_auth.Parameters.AddWithValue("@User_id", lbl_userid.Text);
+        cmd_book_auth.Parameters.AddWithValue("@Title", txt_title.Text);
 
-        cmd_book_auth.Parameters.AddWithValue("@Author_id", AuthorList.SelectedValue);
-        cmd_book_auth.Parameters.AddWithValue("@Book_id", 5);
+        SqlDataReader drEmps = cmd_book_auth.ExecuteReader();
+        int book_id = 0;
+        while (drEmps.Read())
+        {
+            book_id = (int)drEmps["Book_id"];
+        }
+        drEmps.Close();
 
-        cmd_book_auth.ExecuteNonQuery();
+        
+        //List<string> author_list = new List<string>(authors);
+        foreach(ListItem item in AuthorList.Items)
+        {
+            if(item.Selected == true)
+            {
+                auth_list.Add(item.ToString());
+            }
+        }
+
+        List<int> author_id = new List<int>();
+        //SqlDataReader drEmps1 = cmd_book_auth.ExecuteReader();
+        foreach (string author in auth_list)
+        {
+            cmd_book_auth = cn.CreateCommand();
+            cmd_book_auth.CommandText = "select Author_id from Authors where Name = @authName";
+            cmd_book_auth.Parameters.AddWithValue("@authName", author);
+            drEmps = cmd_book_auth.ExecuteReader();
+            while(drEmps.Read())
+            {
+                author_id.Add((int)drEmps["Author_id"]);
+            }
+            drEmps.Close();
+
+        }
+        
+
+        foreach(int author in author_id)
+        {
+            cmd_book_auth = cn.CreateCommand();
+            cmd_book_auth.CommandText = "insert into BookAuth values(@Author_id, @Book_id)";
+
+            cmd_book_auth.Parameters.AddWithValue("@Author_id", author);
+            cmd_book_auth.Parameters.AddWithValue("@Book_id", book_id);
+
+            cmd_book_auth.ExecuteNonQuery();
+        }
+        
 
 
         cn.Close();
 
-
+        Response.Write("<script>alert('Book added successfully!')</script>");
+        Response.Redirect("HomePage.aspx");
 
     }
 
@@ -96,23 +187,28 @@ public partial class List : System.Web.UI.Page
 
 
 
-    protected void btn_Add_Auth_Click(object sender, EventArgs e)
-    {
-        SqlConnection cn = new SqlConnection();
-        cn.ConnectionString = @"Data Source=(LocalDb)\MSSqlLocalDb;Initial Catalog=Suraj;Integrated Security=True;Pooling=False";
+    //protected void btn_Add_Auth_Click(object sender, EventArgs e)
+    //{
+    //    SqlConnection cn = new SqlConnection();
+    //    cn.ConnectionString = @"Data Source=(LocalDb)\MSSqlLocalDb;Initial Catalog=Suraj;Integrated Security=True;Pooling=False";
 
-        SqlCommand cmdInsert = new SqlCommand();
-        cmdInsert.Connection = cn;
-        cmdInsert.CommandType = CommandType.Text;
+    //    SqlCommand cmdInsert = new SqlCommand();
+    //    cmdInsert.Connection = cn;
+    //    cmdInsert.CommandType = CommandType.Text;
 
-        cmdInsert.CommandText = "insert into Authors(Name) values (@Name)";
+    //    cmdInsert.CommandText = "insert into Authors(Name) values (@Name)";
 
-        cmdInsert.Parameters.AddWithValue("@Name", txt_auth.Text);
-        cn.Open();
-        cmdInsert.ExecuteNonQuery();
-        cn.Close();
+    //    string[] authors = txt_auth.Text.Split(',');
+    //    foreach (string author in authors)
+    //    {
+    //        cmdInsert.Parameters.AddWithValue("@Name", author);
+    //    }
+        
+    //    cn.Open();
+    //    cmdInsert.ExecuteNonQuery();
+    //    cn.Close();
       
-    }
+    //}
 
 
 

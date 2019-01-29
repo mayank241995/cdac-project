@@ -7,7 +7,7 @@
     <title></title>
 </head>
 <body style="height: 318px">
-    <form id="form1" runat="server">
+    <form id="form2" runat="server">
     <div>
         <div>
             <asp:Label ID="Label1" runat="server" Text="Select Area"></asp:Label>
@@ -27,7 +27,7 @@
             <asp:ListItem>Thane</asp:ListItem>
             <asp:ListItem>Navi Mumbai</asp:ListItem>
             </asp:DropDownList>&nbsp;
-        <asp:DropDownList ID="DropDownList2" runat="server" OnSelectedIndexChanged="DropDownList2_SelectedIndexChanged">
+        <asp:DropDownList ID="DropDownList2" runat="server">
             <asp:ListItem Selected="True"></asp:ListItem>
             <asp:ListItem>Fiction</asp:ListItem>
             <asp:ListItem>Educational</asp:ListItem>

@@ -65,4 +65,9 @@ public partial class CS : System.Web.UI.Page
 
         //Response.Redirect(Request.Url.AbsoluteUri);
     }
+
+    protected void gvImages_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
+    }
 }

@@ -17,7 +17,7 @@ public partial class Search : System.Web.UI.Page
 
     protected void Button1_Click(object sender, EventArgs e)
     {
-       
+
         GetRecord(string.IsNullOrEmpty(DropDownList1.SelectedValue) ? null : DropDownList1.SelectedValue,
             string.IsNullOrEmpty(DropDownList2.SelectedValue) ? null : DropDownList2.SelectedValue,
             string.IsNullOrEmpty(TextBox1.Text) ? null : TextBox1.Text,
@@ -43,20 +43,20 @@ public partial class Search : System.Web.UI.Page
 
         //string connection = @"Data Source=(LocalDb)\MSSqlLocalDb;Initial Catalog=amit;Integrated Security=True;Pooling=False";
         //string cmdText = "select * from UserInfo where Area=" + ctiy + "and" + "Brand=" + brand;
-        
+
         SqlConnection cn1 = new SqlConnection(ConfigurationManager.ConnectionStrings["con"].ConnectionString);
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = cn1;
         cmd.CommandType = CommandType.Text;
-        cmd.CommandText = "select * from Books b join UserInfo u on b.User_id = u.UserId where " +
-            "(@category IS NULL OR Category = @category) AND (@area IS NULL OR Area = @area) " +
-            "AND (@title IS NULL OR Title = @title) AND (@author IS NULL OR Author = @author);";
-        //cmd.CommandText = "select * from Books b join UserInfo u ON b.User_id = u.UserId " +
-        //    "join Books_Authors ba ON u.UserId = ba.User_id join Authors a ba.AuthorId = a.AuthorId " +
-        //    "where (@category IS NULL OR Category = @category) AND (@area IS NULL OR Area = @area) " +
+        //cmd.CommandText = "select * from Books b join UserInfo u on b.User_id = u.User_id where " +
+        //    "(@category IS NULL OR Category = @category) AND (@area IS NULL OR Area = @area) " +
         //    "AND (@title IS NULL OR Title = @title) AND (@author IS NULL OR Author = @author);";
-        
-        cmd.Parameters.AddWithValue("@area", (object)Area ?? DBNull.Value);
+        cmd.CommandText = "select * from Books b join UserInfo u ON b.User_id = u.User_id " +
+            "join BookAuth ba ON b.Book_id = ba.Book_id join Authors a ON ba.Author_id = a.Author_id " +
+            "where (@category IS NULL OR Category = @category) AND (@Area IS NULL OR Area = @area) " +
+            "AND (@title IS NULL OR Title = @title) AND (@author IS NULL OR a.Name = @author);";
+
+        cmd.Parameters.AddWithValue("@Area", (object)Area ?? DBNull.Value);
         cmd.Parameters.AddWithValue("@category", (object)Category ?? DBNull.Value);
         cmd.Parameters.AddWithValue("@title", (object)Title ?? DBNull.Value);
         cmd.Parameters.AddWithValue("@author", (object)Author ?? DBNull.Value);
@@ -76,15 +76,9 @@ public partial class Search : System.Web.UI.Page
 
             }
         }
-        
+
         drEmps.Close();
         cn1.Close();
     }
-
-
-
-    protected void DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
-    {
-
-    }
 }
+

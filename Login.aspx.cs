@@ -19,14 +19,13 @@ public partial class Login : System.Web.UI.Page
 
     protected void Button1_Click(object sender, EventArgs e)
     {
-
         SqlConnection cn = new SqlConnection();
-        cn.ConnectionString = @"Data Source=(LocalDb)\MSSqlLocalDb;Initial Catalog=BookStore;Integrated Security=True";
+        cn.ConnectionString = @"Data Source=(LocalDb)\MSSqlLocalDb;Initial Catalog=Suraj;Integrated Security=True";
 
         SqlCommand cmdInsert = new SqlCommand();
         cmdInsert.Connection = cn;
         cmdInsert.CommandType = CommandType.StoredProcedure;
-        cmdInsert.CommandText = "UserInfoSelect";
+        cmdInsert.CommandText = "LoginSelect";
 
         cmdInsert.Parameters.AddWithValue("@User_id", txt_uid.Text);
         cmdInsert.Parameters.AddWithValue("@Password", txt_pwd.Text);
@@ -39,15 +38,15 @@ public partial class Login : System.Web.UI.Page
         if (res == 1)
         {
             Session["user_id"] = txt_uid.Text;
-            Response.Redirect("List.aspx");
-
+            Response.Redirect("HomePage.aspx");
         }
         else
         {
             //Response.Write("invalid username & password");
             lblError.Text = "invalid username & password";
         }
-        
+
+
 
 
 

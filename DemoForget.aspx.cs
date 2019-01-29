@@ -22,7 +22,7 @@ public partial class DemoForget : System.Web.UI.Page
         {
 
             SqlConnection cn = new SqlConnection();
-            cn.ConnectionString = @"Data Source=(LocalDb)\MSSqlLocalDb;Initial Catalog=BookStore;Integrated Security=True;Pooling=False";
+            cn.ConnectionString = @"Data Source=(LocalDb)\MSSqlLocalDb;Initial Catalog=Suraj;Integrated Security=True;Pooling=False";
 
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = cn;
